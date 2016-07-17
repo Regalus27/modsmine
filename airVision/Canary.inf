@@ -1,0 +1,5 @@
+main-class = airvision.airVision
+name = airVision
+author = yourname
+version = 1.0
+

@@ -13,6 +13,7 @@ import net.canarymod.Canary;
 import net.canarymod.commandsys.*;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.api.entity.living.humanoid.Player;
+import net.canarymod.api.world.World;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.entity.living.EntityLiving;
 import java.util.List;
@@ -28,11 +29,16 @@ public class SkyCmd extends EZPlugin {
       Player me = (Player)caller;//(3)       
       List<EntityLiving> list = me.getWorld().getEntityLivingList();
       for (EntityLiving target : list) {
+        World world = target.getWorld();
         if (!(target instanceof Player)) {
           Location loc = target.getLocation();
           double y = loc.getY();
           loc.setY(y+50);
           target.teleportTo(loc);
+          world.makeExplosion(target,
+                  loc.getX(), loc.getY(), loc.getZ(),
+                  3.0f, true);
+
         }
       }
     }
