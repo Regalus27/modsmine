@@ -44,6 +44,8 @@ public class RainStick extends EZPlugin implements PluginListener {
     @HookHandler
     public void onInteract(ItemUseHook event) {
         Player me = event.getPlayer();
+        List<EntityLiving> list = me.getWorld().getEntityLivingList();
+
         if (me.getItemHeld().getType() == ItemType.Stick) {
 
             me.getWorld().setRaining(true);
@@ -60,12 +62,20 @@ public class RainStick extends EZPlugin implements PluginListener {
             }
         }
         if (me.getItemHeld().getType() == ItemType.Bone) {
-            List<EntityLiving> list = me.getWorld().getEntityLivingList();
+            for (EntityLiving target : list) {
+                World world = target.getWorld();
+                if (target instanceof EntityMob) {
+                    Location loc = target.getLocation();
+                    me.getWorld().makeLightningBolt(loc);
+                }
+            }
+        }
+        if (me.getItemHeld().getType() == ItemType.Feather) {
             for (EntityLiving target : list) {
                 World world = target.getWorld();
                 if (!(target instanceof Player)) {
                     Location loc = target.getLocation();
-                    me.getWorld().makeLightningBolt(loc);
+                    me.getWorld().makeExplosion(target, loc, 1.0f, true);
                 }
             }
         }
