@@ -3,6 +3,7 @@ package rainstick;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.canarymod.api.world.TreeType;
 import net.canarymod.plugin.Plugin;
 import net.canarymod.logger.Logman;
 import net.canarymod.Canary;
@@ -57,6 +58,7 @@ public class RainStick extends EZPlugin implements PluginListener {
                 Block b = sightItr.next();
                 if (b.getType() != BlockType.Air) {
                     b.getWorld().makeLightningBolt(b.getLocation());
+                    b.getWorld().generateTree(b.getPosition(), TreeType.MEGAJUNGLE);
                     break;
                 }
             }
@@ -70,7 +72,7 @@ public class RainStick extends EZPlugin implements PluginListener {
                 }
             }
         }
-        if (me.getItemHeld().getType() == ItemType.Feather) {
+        if (me.getItemHeld().getType() == ItemType.OakLeaves) {
             for (EntityLiving target : list) {
                 World world = target.getWorld();
                 if (!(target instanceof Player)) {

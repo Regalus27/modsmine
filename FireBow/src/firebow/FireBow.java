@@ -47,7 +47,7 @@ public class FireBow extends EZPlugin implements PluginListener {
           3.0f, true);
 
       event.setCanceled();
-      //causes bouncing eggs
+      //causes bouncing eggs and such
     }
   }
   
