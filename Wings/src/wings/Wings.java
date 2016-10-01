@@ -1,6 +1,9 @@
 package wings;
 import net.canarymod.BlockIterator;
 import net.canarymod.LineTracer;
+import net.canarymod.api.DamageSource;
+import net.canarymod.api.DamageType;
+import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.living.EntityLiving;
 import net.canarymod.api.entity.living.LivingBase;
 import net.canarymod.api.entity.living.monster.EntityMob;
@@ -12,6 +15,7 @@ import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.blocks.BlockType;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.hook.HookHandler;
+import net.canarymod.hook.entity.DamageHook;
 import net.canarymod.hook.player.ItemUseHook;
 import net.canarymod.plugin.Plugin;
 import net.canarymod.logger.Logman;
@@ -35,23 +39,25 @@ public class Wings extends EZPlugin implements PluginListener{
   @HookHandler
   public void onInteract(ItemUseHook event) {
     Player me = event.getPlayer();
-    BlockIterator blockIterator = new BlockIterator(new LineTracer(me), true);
+    World world = me.getWorld();
 
     if (me.getItemHeld().getType() == ItemType.Feather) {
-      int dist = 50;
-      double posX, posY, posZ;
-      Block b = null;
-      while (blockIterator.hasNext() && dist > 0){
-        dist--;
-        b = blockIterator.next();
-      }
-      posX = b.getX()-me.getX();
-      posY = b.getY()-me.getY();
-      posZ = b.getZ()-me.getZ();
+      me.setMotionY(me.getMotionY()+.6);
+    }
+  }
 
-      me.setMotionX(posX);
-      me.setMotionY(posY);
-      me.setMotionZ(posZ);
+  @HookHandler
+  public void onDamage(DamageHook event) {
+    //check if player
+    //check if fall damage
+      //cancel fall damage
+    Entity thing = event.getDefender();
+    if(thing instanceof Player) {
+      //Player me = thing;
+      if (((Player) thing).getItemHeld().getType() == ItemType.Feather) {
+        event.setDamageDealt(0);
+
+      }
     }
   }
 
