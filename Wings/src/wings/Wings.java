@@ -17,6 +17,7 @@ import net.canarymod.api.world.position.Location;
 import net.canarymod.hook.HookHandler;
 import net.canarymod.hook.entity.DamageHook;
 import net.canarymod.hook.player.ItemUseHook;
+import net.canarymod.hook.player.PlayerMoveHook;
 import net.canarymod.plugin.Plugin;
 import net.canarymod.logger.Logman;
 import net.canarymod.Canary;
@@ -44,6 +45,15 @@ public class Wings extends EZPlugin implements PluginListener{
     if (me.getItemHeld().getType() == ItemType.Feather) {
       me.setMotionY(me.getMotionY()+.6);
     }
+
+  }
+
+  @HookHandler
+  public void playerMove(PlayerMoveHook event) {
+    Player me = event.getPlayer();
+    if(me.getInventory().hasItem(ItemType.GhastTear) && me.getMotionY() < (-.3)) {
+      me.setMotionY(0);
+    }
   }
 
   @HookHandler
@@ -56,7 +66,9 @@ public class Wings extends EZPlugin implements PluginListener{
       //Player me = thing;
       if (((Player) thing).getItemHeld().getType() == ItemType.Feather) {
         event.setDamageDealt(0);
-
+      }
+      if (((Player) thing).getInventory().hasItem(ItemType.GhastTear)) {
+        event.setDamageDealt(0);
       }
     }
   }
