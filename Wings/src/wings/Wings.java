@@ -26,6 +26,7 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.api.entity.living.humanoid.Player;
 import com.pragprog.ahmine.ez.EZPlugin;
 import net.canarymod.plugin.PluginListener;
+import net.minecraft.potion.PotionEffect;
 
 import java.util.List;
 
@@ -53,6 +54,10 @@ public class Wings extends EZPlugin implements PluginListener{
     Player me = event.getPlayer();
     if(me.getInventory().hasItem(ItemType.GhastTear) && me.getMotionY() < (-.3)) {
       me.setMotionY(0);
+    }
+    if(me.getItemHeld().getType() == ItemType.Feather){
+      me.addPotionEffect(PotionEffectType.JUMP, 10, 10);
+      me.addPotionEffect(PotionEffectType.MOVESPEED, 10, 10);
     }
   }
 
