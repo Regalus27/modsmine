@@ -52,12 +52,9 @@ public class Wings extends EZPlugin implements PluginListener{
   @HookHandler
   public void playerMove(PlayerMoveHook event) {
     Player me = event.getPlayer();
-    if(me.getInventory().hasItem(ItemType.GhastTear) && me.getMotionY() < (-.3)) {
-      me.setMotionY(0);
-    }
-    if(me.getItemHeld().getType() == ItemType.Feather){
-      me.addPotionEffect(PotionEffectType.JUMP, 10, 10);
-      me.addPotionEffect(PotionEffectType.MOVESPEED, 10, 10);
+    if(me.getInventory().hasItem(ItemType.GhastTear)) {
+      me.addPotionEffect(PotionEffectType.JUMP, 60, 4);
+      me.addPotionEffect(PotionEffectType.MOVESPEED, 60, 5);
     }
   }
 
