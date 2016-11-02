@@ -1,0 +1,5 @@
+main-class = tower.Tower
+name = Tower
+author = yourname
+version = 1.0
+
